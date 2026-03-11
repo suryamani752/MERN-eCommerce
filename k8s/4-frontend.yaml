@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: 612822777037.dkr.ecr.ap-south-1.amazonaws.com/mern-frontend:3
+          image: 612822777037.dkr.ecr.ap-south-1.amazonaws.com/mern-frontend:4
           ports:
             - containerPort: 80
           readinessProbe:
