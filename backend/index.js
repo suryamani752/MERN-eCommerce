@@ -47,6 +47,14 @@ server.get("/",(req,res)=>{
     res.status(200).json({message:'running'})
 })
 
+// Health check endpoint — K8s readiness/liveness probe ke liye
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    status: "healthy",
+    timestamp: new Date().toISOString()
+  });
+});
+
 server.listen(8000,()=>{
     console.log('server [STARTED] ~ http://localhost:8000');
 })
