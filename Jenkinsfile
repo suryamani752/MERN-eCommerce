@@ -100,7 +100,7 @@ pipeline {
                             git diff --quiet --cached || git commit -m "CI: Update image tags to build ${IMAGE_TAG}"
                         """
                         sh """
-                            git push https://${GIT_USER}:${GIT_TOKEN}@github.com/YOUR_USERNAME/mern-ecommerce.git HEAD:main
+                            git push https://${GIT_USER}:${GIT_TOKEN}@github.com/suryamani752/mern-ecommerce.git HEAD:main
                         """
                     }
                 }
