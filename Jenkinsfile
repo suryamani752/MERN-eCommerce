@@ -14,6 +14,22 @@ pipeline {
 
     stages {
 
+        stage('Check Commit Message') {
+            steps {
+                script {
+                    def commitMsg = sh(
+                        script: 'git log -1 --pretty=%B HEAD || echo "initial"',
+                        returnStdout: true
+                    ).trim()
+                    echo "Commit message: ${commitMsg}"
+                    if (commitMsg.contains('[skip ci]')) {
+                        currentBuild.result = 'NOT_BUILT'
+                        error("Skipping CI — commit contains [skip ci]")
+                    }
+                }
+            }
+        }
+
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
@@ -97,7 +113,7 @@ pipeline {
                         """
                         sh "git add k8s/3-backend.yaml k8s/4-frontend.yaml"
                         sh """
-                            git diff --quiet --cached || git commit -m "CI: Update image tags to build ${IMAGE_TAG}"
+                            git diff --quiet --cached || git commit -m "CI: Update image tags to build ${IMAGE_TAG} [skip ci]"
                         """
                         sh """
                             git push https://${GIT_USER}:${GIT_TOKEN}@github.com/suryamani752/mern-ecommerce.git HEAD:main
